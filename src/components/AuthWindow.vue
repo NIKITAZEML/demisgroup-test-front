@@ -106,14 +106,15 @@ export default {
         border-radius: .347vw;
         width: 12.222vw;
         height: 3.611vw;
-        background-color: #1390E5;
+        background-color: #BA1735;
         border: 0;
         transition: .2s;
     }
 
     .entry-btn:hover{
         background-color: #ffffff;
-        color: black;
+        color: #BA1735;
+        border: #BA1735 .1vw solid;
     }
 
     .areas-line__window-auth{
