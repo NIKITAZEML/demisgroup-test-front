@@ -53,8 +53,7 @@
 }
 
 .clicked{
-    /*background-color: rgba(197, 228, 249, 0.3);*/
-    border: #BA1735 solid .1vw;
+    border: #BA1735 solid .1vw !important;
 }
 
 .borr-10{

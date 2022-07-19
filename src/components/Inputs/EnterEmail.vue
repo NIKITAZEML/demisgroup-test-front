@@ -1,7 +1,7 @@
 <template>
     <div class="enter">
-        <label class="label-enter" for="input-email">email</label>
-        <input type="text" class="input" id="input-email"
+        <label class="label-enter" for="input-email">Email</label>
+        <input type="email" class="input" id="input-email"
                @focus="focusEmail = !focusEmail"
                :class="{ clicked :  focusEmail}"
                 @blur="focusEmail = !focusEmail"
@@ -20,7 +20,7 @@ export default {
     },
     methods:{
         setEmail(){
-            this.$emit('setLogin', this.email)
+            this.$emit('setEmail', this.email)
         }
     },
     props:{

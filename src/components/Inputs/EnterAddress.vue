@@ -20,7 +20,7 @@ export default {
     },
     methods:{
         setAddress(){
-            this.$emit('setLogin', this.address)
+            this.$emit('setAddress', this.address)
         }
     },
     props:{

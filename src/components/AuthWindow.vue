@@ -5,20 +5,55 @@
         </div>
         <form @submit.prevent="sendData">
             <div class="areas-line__window-auth">
-                <enter-login :login="login" @setLogin="setLogin"></enter-login>
-                <enter-addresss :address="address" @setAddress="setAddress"></enter-addresss>
+                <div class="input-group">
+                     <enter-login :login="login" @setLogin="setLogin"></enter-login>
+                    <div class="errors" v-if="$v.login.$dirty">
+                        <div class="error" v-if="!$v.login.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.login.minLength">Минимальная длина поля - 4 символа</div>
+                    </div> 
+                </div>
+            
+                <div class="input-group">
+                    <enter-address :address="address" @setAddress="setAddress"></enter-address>
+                    <div class="errors" v-if="$v.address.$dirty">
+                        <div class="error" v-if="!$v.address.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.address.minLength">Минимальная длина поля 10 символов</div>
+                        <div class="error" v-if="!$v.address.maxLength">Максимальная длина поля 50 символов</div>
+                    </div> 
+                </div>   
             </div>
             <div class="areas-line__window-auth">
-                <enter-phone :phone="phone" @setphone="setphone"></enter-phone>
-                <enter-email :email="email" @setEmail="setEmail"></enter-email>
+                <div class="input-group">
+                    <enter-phone :phone="phone" @setPhone="setPhone"></enter-phone>
+                     <div class="errors" v-if="$v.phone.$dirty">
+                        <div class="error" v-if="!$v.phone.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.phone.minLength">Минимальная длина поля 11 символов</div>
+                        <div class="error" v-if="!$v.phone.maxLength">Максимальная длина поля 13 символов</div>
+                    </div> 
+                </div>
+
+                <div class="input-group">
+                    <enter-email :email="email" @setEmail="setEmail"></enter-email>
+                    <div class="errors" v-if="$v.email.$dirty">
+                        <div class="error" v-if="!$v.email.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.email.minLength">Минимальная длина поля 4 символа</div>
+                        <div class="error" v-if="!$v.email.email">Введите корректный email</div>
+                    </div> 
+                </div>
+                
             </div>
             <div class="main-area__window-auth">
                 <enter-review :review="review" @setReview="setReview"></enter-review>
+                 <div class="errors" v-if="$v.review.$dirty">
+                        <div class="error" v-if="!$v.review.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.review.maxLength">Максимальная длина поля - 300 символов</div>
+                    </div> 
                 <button class="entry-btn" type="submit" >
                     Отправить
                 </button>
             </div>
         </form>
+        
     </div>
 </template>
 
@@ -27,8 +62,9 @@ import EnterLogin from './Inputs/EnterLogin';
 import EnterPhone from './Inputs/EnterPhone';
 import EnterReview from "./Inputs/EnterReview";
 import EnterEmail from "./Inputs/EnterEmail";
-import EnterAddresss from "./Inputs/EnterAddress";
+import EnterAddress from "./Inputs/EnterAddress";
 import axios from "axios";
+import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'
 
 export default {
     name: "AuthWindow",
@@ -42,21 +78,51 @@ export default {
           errors: [],
       }
     },
+    validations: {
+        login: {
+            required,
+            minLength: minLength(4)
+        },
+        phone: {    
+            required,
+            minLength: minLength(11),
+            maxLength: maxLength(13)
+        },
+        email: {
+            minLength: minLength(4),
+            required,
+            email
+        }, 
+        address: {
+            required,
+            minLength: minLength(10),
+            maxLength: maxLength(50)
+        },
+        review: {
+            required,
+            maxLength: maxLength(300)
+        }
+    },    
     methods:{
         setLogin(newLogin){
             this.login = newLogin;
+            this.$v.login.$touch()
         },
-        setphone(newphone){
+        setPhone(newphone){
             this.phone = newphone;
+            this.$v.phone.$touch()
         },
         setReview(newReview){
             this.review = newReview;
+            this.$v.review.$touch()
         },
         setEmail(newEmail){
             this.email = newEmail;
+            this.$v.email.$touch()
         },
         setAddress(newAddress){
-            this.email = newAddress;
+            this.address = newAddress;
+            this.$v.address.$touch()
         },
         sendData(){
             axios.post(`http://127.0.0.1:8000/api/review/`, {
@@ -72,7 +138,7 @@ export default {
         EnterLogin,
         EnterPhone,
         EnterEmail,
-        EnterAddresss
+        EnterAddress
     }
 }
 </script>
@@ -130,10 +196,15 @@ export default {
         width: 100%;
     }
 
+    .errors{
+        color: red;
+        font-size: 1vw;
+    }
+
     @media screen and (max-width: 768px) {
         .window-auth{
             width: 66.406vw;
-            height: 90.708vw;
+            height: 110vw;
         }
 
         .auth__entrance-heading{
@@ -155,13 +226,17 @@ export default {
         .main-area__window-auth{
             align-items: flex-start;
         }
+
+        .errors{
+            font-size: 2vw;
+        }
     }
 
     @media screen and (max-width: 320px) {
         .window-auth{
             margin-top: 20vw;
             width: 95vw;
-            height: 262vw;
+            height: 280vw;
             position: static;
             top: 0;
             left: 0;
@@ -181,6 +256,10 @@ export default {
             font-size: 6.25vw;
             width: 55vw;
             height: 16.25vw;
+        }
+
+        .errors{
+            font-size: 4vw;
         }
     }
 </style>

@@ -47,7 +47,7 @@ export default {
     height: 8vw;
     resize: none;
     outline: none;
-    border: solid .1vw rgba(23, 23, 25, 0.2);;
+    border: solid .1vw rgba(23, 23, 25, 0.2);
     font-size: 1.389vw;
     padding: .833vw 1.042vw .833vw 1.042vw;
 }

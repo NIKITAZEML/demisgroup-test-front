@@ -23,7 +23,7 @@ export default {
     },
     methods:{
         setphone(){
-            this.$emit('setphone', this.phone)
+            this.$emit('setPhone', this.phone)
         }
     },
 }
