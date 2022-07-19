@@ -9,7 +9,6 @@
                      <enter-login :login="login" @setLogin="setLogin"></enter-login>
                     <div class="errors" v-if="$v.login.$dirty">
                         <div class="error" v-if="!$v.login.required">Поле обязательно</div>
-                        <div class="error" v-if="!$v.login.maxLength">Максимальная длина поля - 20 символов</div>
                         <div class="error" v-if="!$v.login.minLength">Минимальная длина поля - 4 символа</div>
                     </div> 
                 </div>
@@ -65,14 +64,14 @@
 </template>
 
 <script>
-import EnterLogin from './Inputs/EnterLogin';
-import EnterPhone from './Inputs/EnterPhone';
-import EnterReview from "./Inputs/EnterReview";
-import EnterEmail from "./Inputs/EnterEmail";
-import EnterAddress from "./Inputs/EnterAddress";
+import EnterLogin from '../components/Inputs/EnterLogin';
+import EnterPhone from '../components/Inputs/EnterPhone';
+import EnterReview from "../components/Inputs/EnterReview";
+import EnterEmail from "../components/Inputs/EnterEmail";
+import EnterAddress from "../components/Inputs/EnterAddress";
 import axios from "axios";
 import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'
-import ReviewTable from "./ReviewTable";
+import ReviewTable from "../components/ReviewTable";
 
 export default {
     name: "AuthWindow",
@@ -92,7 +91,6 @@ export default {
     validations: {
         login: {
             required,
-            maxLength: maxLength(20),
             minLength: minLength(4)
         },
         phone: {    

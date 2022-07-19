@@ -3,6 +3,7 @@ import App from './App.vue'
 import store from './store'
 import axios from "axios";
 import Vuelidate from 'vuelidate'
+
 Vue.use(Vuelidate)
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-      <auth-window></auth-window>
+    <Main></Main>
   </div>
 </template>
 
 <script>
 
-import AuthWindow from "./components/ReviewForm";
+import Main from "./views/Main";
 export default {
   name: 'App',
   components: {
-      AuthWindow
+      Main,
   }
 }
 </script>
