@@ -201,18 +201,28 @@ export default {
         font-size: 1vw;
     }
 
+    .input-group{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     @media screen and (max-width: 768px) {
         .window-auth{
-            width: 66.406vw;
-            height: 110vw;
+            width: 99vw;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
         }
 
         .auth__entrance-heading{
-            margin-bottom: 2.604vw;
+            margin-top: 5vw;
+            margin-bottom: 5vw;
             font-size: 2.344vw;
         }
 
         .entry-btn{
+            align-self: center;
             font-size: 2.604vw;
             border-radius: .651vw;
             width: 22.917vw;
@@ -224,7 +234,7 @@ export default {
         }
 
         .main-area__window-auth{
-            align-items: flex-start;
+            align-items: center;
         }
 
         .errors{
@@ -234,9 +244,8 @@ export default {
 
     @media screen and (max-width: 320px) {
         .window-auth{
-            margin-top: 20vw;
             width: 95vw;
-            height: 280vw;
+            height: 100vh;
             position: static;
             top: 0;
             left: 0;
@@ -256,10 +265,17 @@ export default {
             font-size: 6.25vw;
             width: 55vw;
             height: 16.25vw;
+            align-self: center;
         }
 
         .errors{
             font-size: 4vw;
+            text-align: center;
+        }
+
+        .input-group{
+            width: 100%;
+            margin-left: 20vw;
         }
     }
 </style>
