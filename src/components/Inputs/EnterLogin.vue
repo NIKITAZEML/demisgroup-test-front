@@ -1,6 +1,6 @@
 <template>
     <div class="enter">
-        <label class="label-enter" for="input-login">Имя</label>
+        <label class="label-enter" for="input-login">ФИО</label>
         <input type="text" class="input" id="input-login"
                @focus="focusLogin = !focusLogin"
                :class="{ clicked :  focusLogin}"

@@ -1,7 +1,7 @@
 <template>
     <div class="window-auth borr-10">
         <div class="auth__entrance-heading">
-            Форма отзывов
+            Форма обратной связи
         </div>
         <form @submit.prevent="sendData">
             <div class="areas-line__window-auth">
@@ -51,6 +51,12 @@
                 <button class="entry-btn" type="submit" >
                     Отправить
                 </button>
+                <div class="successfully__form" v-if="isSuccessfully">
+                    Данные успешно отправлены
+                </div>
+                <div class="unsuccessfully__form"  v-if="isUnsuccessfully">
+                    Введенные данные некорректны
+                </div>
             </div>
         </form>
         
@@ -76,6 +82,8 @@ export default {
           email: '',
           address: '',
           errors: [],
+          isSuccessfully: false,
+          isUnsuccessfully: false,
       }
     },
     validations: {
@@ -125,12 +133,24 @@ export default {
             this.$v.address.$touch()
         },
         sendData(){
-            axios.post(`http://127.0.0.1:8000/api/review/`, {
-                name: this.login, phone: this.phone, review: this.review
-            })
-            .then( response => {
-                console.log(response)
-            })
+            if(!this.$v.$invalid) {
+                axios.post(`http://127.0.0.1:8000/api/review/`, {
+                    name: this.login, address: this.address, phone: this.phone, email: this.email, review: this.review
+                })
+                    .then(response => {
+                        console.log(response)
+                    })
+                this.isSuccessfully = !this.isSuccessfully;
+                setTimeout(()=>{
+                    this.isSuccessfully = !this.isSuccessfully;
+                }, 3000)
+
+            } else{
+                this.isUnsuccessfully = !this.isUnsuccessfully;
+                setTimeout(()=>{
+                    this.isUnsuccessfully = !this.isUnsuccessfully;
+                }, 3000)
+            }
         }
     },
     components:{
@@ -146,7 +166,7 @@ export default {
 <style scoped>
     .window-auth{
         width: 60.417vw;
-        height: 33vw;
+        height: 35vw;
         border: .1vw rgba(39, 39, 39, .1) solid;
         background-color: #fff;
         display: flex;
@@ -205,6 +225,18 @@ export default {
         display: flex;
         flex-direction: column;
         align-items: center;
+    }
+
+    .successfully__form{
+        color: #16c416;
+    }
+
+    .unsuccessfully__form{
+        color: red;
+    }
+
+    .successfully__form, .unsuccessfully__form{
+        font-size: 1.5vw;
     }
 
     @media screen and (max-width: 768px) {
