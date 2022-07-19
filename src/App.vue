@@ -6,7 +6,7 @@
 
 <script>
 
-import AuthWindow from "./components/AuthWindow";
+import AuthWindow from "./components/ReviewForm";
 export default {
   name: 'App',
   components: {

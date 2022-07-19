@@ -9,6 +9,7 @@
                      <enter-login :login="login" @setLogin="setLogin"></enter-login>
                     <div class="errors" v-if="$v.login.$dirty">
                         <div class="error" v-if="!$v.login.required">Поле обязательно</div>
+                        <div class="error" v-if="!$v.login.maxLength">Максимальная длина поля - 20 символов</div>
                         <div class="error" v-if="!$v.login.minLength">Минимальная длина поля - 4 символа</div>
                     </div> 
                 </div>
@@ -59,7 +60,7 @@
                 </div>
             </div>
         </form>
-        
+        <review-table :items="items"></review-table>
     </div>
 </template>
 
@@ -71,11 +72,13 @@ import EnterEmail from "./Inputs/EnterEmail";
 import EnterAddress from "./Inputs/EnterAddress";
 import axios from "axios";
 import { required, minLength, maxLength, email} from 'vuelidate/lib/validators'
+import ReviewTable from "./ReviewTable";
 
 export default {
     name: "AuthWindow",
     data(){
       return{
+          items: [],
           login: '',
           phone: '',
           review: '',
@@ -89,6 +92,7 @@ export default {
     validations: {
         login: {
             required,
+            maxLength: maxLength(20),
             minLength: minLength(4)
         },
         phone: {    
@@ -110,7 +114,13 @@ export default {
             required,
             maxLength: maxLength(300)
         }
-    },    
+    },
+    beforeCreate() {
+        axios.get(`http://127.0.0.1:8000/api/review/`, )
+            .then(response => {
+                this.items = response.data
+            })
+    },
     methods:{
         setLogin(newLogin){
             this.login = newLogin;
@@ -144,21 +154,25 @@ export default {
                 setTimeout(()=>{
                     this.isSuccessfully = !this.isSuccessfully;
                 }, 3000)
-
+                this.items.push({
+                    name: this.login, address: this.address, phone: this.phone, email: this.email, review: this.review
+                })
             } else{
                 this.isUnsuccessfully = !this.isUnsuccessfully;
                 setTimeout(()=>{
                     this.isUnsuccessfully = !this.isUnsuccessfully;
                 }, 3000)
             }
-        }
+        },
+
     },
     components:{
+        ReviewTable,
         EnterReview,
         EnterLogin,
         EnterPhone,
         EnterEmail,
-        EnterAddress
+        EnterAddress,
     }
 }
 </script>
@@ -307,7 +321,6 @@ export default {
 
         .input-group{
             width: 100%;
-            margin-left: 20vw;
         }
     }
 </style>
