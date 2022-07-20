@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from "../views/News";
+import News from "../views/News";
+import Main from "../views/Main";
 import ReviewForm from "../views/ReviewForm";
 
 Vue.use(VueRouter)
@@ -15,7 +16,11 @@ const routes = [
     path: '/review-form',
     name: 'Form',
     component: ReviewForm
-    // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/news',
+    name: 'News',
+    component: News
   }
 ]
 

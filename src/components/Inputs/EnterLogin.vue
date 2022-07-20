@@ -4,28 +4,28 @@
         <input type="text" class="input" id="input-login"
                @focus="focusLogin = !focusLogin"
                :class="{ clicked :  focusLogin}"
-                @blur="focusLogin = !focusLogin"
-                v-model="login"
-                @input="setLogin">
+               @blur="focusLogin = !focusLogin"
+               v-model="login"
+               @input="setLogin">
     </div>
 </template>
 
 <script>
-export default {
-    name: "InputLogin",
-    data () {
-        return{
-            focusLogin: false,
+    export default {
+        name: "InputLogin",
+        data() {
+            return {
+                focusLogin: false,
+            }
+        },
+        methods: {
+            setLogin() {
+                this.$emit('setLogin', this.login)
+            }
+        },
+        props: {
+            login: String,
         }
-    },
-    methods:{
-        setLogin(){
-            this.$emit('setLogin', this.login)
-        }
-    },
-    props:{
-        login: String,
     }
-}
 </script>
 

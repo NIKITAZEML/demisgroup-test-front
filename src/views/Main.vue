@@ -1,7 +1,7 @@
 <template>
     <main>
         <h2 class="heading__page">
-            Новости
+            Главная
         </h2>
         <div class="container">
             <b-media class="element__news" right-align vertical-align="center" v-for="elem in news" :key="elem.id">
@@ -12,9 +12,17 @@
                     </div>
                 </div>
                 <p class="mb-0">
-                    {{ elem.text }}
+                    {{ elem.text }}...
                 </p>
             </b-media>
+            <div class="main-links">
+                <router-link class="main-link" to="/news">
+                    Все новости
+                </router-link>
+                <router-link class="main-link" to="/review-form">
+                    Обратная связь
+                </router-link>
+            </div>
         </div>
     </main>
 </template>
@@ -23,6 +31,7 @@
     import axios from "axios";
 
     export default {
+        name: "Main",
         data() {
             return {
                 news: [],
@@ -31,25 +40,29 @@
         beforeCreate() {
             axios.get(`http://127.0.0.1:8000/api/news?=&3/`,)
                 .then(response => {
-                    console.log(response.data)
-                    this.news = response.data
+                    let res = response.data;
+
+                    res = res.slice(0, 3);
+
+                    res.forEach(elem => {
+                        elem.text = elem.text.substr(0, 170);
+                    })
+
+                    this.news = res;
                 })
+
         }
     }
 </script>
 
-<style>
-    .heading__page {
-        text-align: center;
-        margin-top: 1vw;
-    }
-
-    .heading {
+<style scoped>
+    .main-links {
+        margin-top: 2vw;
         display: flex;
-        justify-content: space-between;
+        flex-direction: column;
     }
 
-    .element__news {
-        margin-top: 3vw;
+    .main-link {
+        margin-bottom: .7vw;
     }
 </style>

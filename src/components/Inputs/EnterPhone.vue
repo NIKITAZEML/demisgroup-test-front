@@ -11,21 +11,21 @@
 </template>
 
 <script>
-export default {
-    name: "Enterphone",
-    data () {
-        return{
-            focusphone: false,
-        }
-    },
-    props:{
-        phone: String,
-    },
-    methods:{
-        setphone(){
-            this.$emit('setPhone', this.phone)
-        }
-    },
-}
+    export default {
+        name: "Enterphone",
+        data() {
+            return {
+                focusphone: false,
+            }
+        },
+        props: {
+            phone: String,
+        },
+        methods: {
+            setphone() {
+                this.$emit('setPhone', this.phone)
+            }
+        },
+    }
 </script>
 
